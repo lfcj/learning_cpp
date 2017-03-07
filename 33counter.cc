@@ -1,6 +1,4 @@
-#include <iostream>
-#include <string>
-#include <cmath>
+#include "accelerated.h"
 
 #define SIZE 100
 
