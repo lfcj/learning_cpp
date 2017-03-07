@@ -25,26 +25,7 @@ Result would be:
 'o'    is smallest word.
 ***********************/
 
-void find_biggest_and_smallest(int *array, int array_len, int *res){
-    // res = {min_start, max_start, min_end, max_end}
-    int cur_min = array[0];
-    int cur_max = array[0];
-    res[2] = array[0]; res[3] = array[0];
-    if (array_len < 2)
-      return;
-    int temp = 0;
-    for (int i=1;i<array_len;i++){
-      temp = array[i]-array[i-1];
-      if (cur_min > temp){
-        cur_min = temp;
-        res[0] = array[i-1]; res[2] = array[i];
-      }
-      if (cur_max < temp){
-        cur_max = temp;
-        res[1] = array[i-1]; res[3] = array[i];
-      }
-    }
-}
+
 int main () {
   cout << "Please enter something: " << endl;
   cin.getline(input, sizeof(input));
