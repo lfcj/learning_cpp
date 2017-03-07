@@ -2,6 +2,10 @@
 #include <string>
 #include <cmath>
 
+#define SIZE 100
+
+char input[SIZE];
+int stops[SIZE/2];
 /*
         Book: Accelerated C++, Koenig & Moo.
         @author: Luisa Castano, fernanda16400@gmail.com
@@ -30,9 +34,8 @@ Result would be:
 'o'    is 1 time in text
 ***********************/
 using namespace std;
-// ascii A (65) to z (122)
 
-bool next_is_stop(int index, int* stops, int stops_len){
+bool next_is_stop(int index, int stops_len){
   bool res = true;
 
   for (int i=0;i<stops_len;i++){
@@ -42,31 +45,36 @@ bool next_is_stop(int index, int* stops, int stops_len){
   }
   return res;
 }
-// returns the amount of times that word is repeated in text
-int compare_words(char* text, int begin, int end, int* stops, int text_len, int stops_len, int index){
+/* returns the amount of times that word is repeated in text
+ *
+ * begin: index of char where word being compared starts with.
+ * end:   index of char where word being compared ends + 1.
+ * text_len: length of user input.
+ * stops_len: amount of white spaces, equal amout of words.
+ * index: current stop index.
+ */
+int compare_words(int begin, int end, int text_len, int stops_len, int index){
   int stop_iterator = index;
-  // int current_begin = end + 1;
   int current_begin = stops[stop_iterator] + 1;
   int current_end;
   int count = 1;
   int word_len = end-begin;
   bool equal;
   int iterator = begin;
-  // aslkj aslekj aslkvnlas asekj asasdkj nk kls elksj
-  // 0     6      13        23    29      37 40  44
+
   while ((current_begin + word_len) <= text_len +1){
     equal = true;
     current_end = current_begin + word_len;
     for (int i = current_begin; i < current_end && equal;i++){
-      equal = equal && (text[i] == text[iterator]);
+      equal = equal && (input[i] == input[iterator]);
       iterator++;
     }
-    if (equal && next_is_stop(current_end, stops, stops_len)){
+    if (equal && next_is_stop(current_end, stops_len)){
       count++;
 
       // delete word not to count it again.
       for (int i=current_begin;i<current_end;i++)
-        text[i]='^';
+        input[i]='^';
     }
     // keep comparing
     iterator = begin;
@@ -77,10 +85,7 @@ int compare_words(char* text, int begin, int end, int* stops, int text_len, int 
 
 }
 int main () {
-  int size = 100;
   int input_len = 0;
-  char input[size];
-  int stops[size/2];
   cout << "Please enter something: " << endl;
   cin.getline(input, sizeof(input));
 
@@ -88,7 +93,7 @@ int main () {
   int ascii;
   int stops_iterator = 0; // represents # words-1.
   stops[0] = 0;
-  for (int i=1;i<size;i++){
+  for (int i=1;i<SIZE;i++){
     if (input[i] == '\0') // end of string?
       break;
 
@@ -108,7 +113,7 @@ int main () {
   int begin;
   for (int i=0;i<stops_iterator;i++){
     begin = i==0? i:stops[i-1]+1;
-    current_count = compare_words(input, begin, stops[i], stops, input_len, stops_iterator, i);
+    current_count = compare_words(begin, stops[i], input_len, stops_iterator, i);
     if (input[begin] != '^'){
       cout << "Word '";
       for (int j=begin;j<stops[i];j++)
