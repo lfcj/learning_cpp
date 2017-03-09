@@ -4,6 +4,14 @@
 #include <cstdlib> // rand und srand.
 #include <ctime>
 
+/*
+        @author: Luisa Castano, fernanda16400@gmail.com
+*/
+/** PROBLEM:
+  Write a program to compute and print the quartiles of a
+  set of integers **/
+
+
 using namespace std;
 typedef vector<int>::size_type vc_size;
 // notice: call-by-value, which is not necessarily efficient.
